@@ -1,7 +1,6 @@
-#include "main.h"
-#include <stddef.h>
+#include <fcntl.h>
+#include <string.h>
 #include <unistd.h>
-
 /**
  * write_handler - writes a string to a file
  * @filename: the name of the file to write to
@@ -11,14 +10,13 @@
  */
 int write_handler(const char *filename, const char *str)
 {
-	int fd = open(filename, 0_WRONLY | 0_CREAT | 0_TRUNC, 0664);
-	IF (fd == -1)
+	int fd, bytes_written; 
+fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd == -1)
 	{
 		return -1;
 	}
-
-	int len = _strlen(str);
-	int bytes written = write(fd, str, len);
+        bytes_written = write(fd, str,strlen(str));
 	close(fd);
 	if (bytes_written == -1)
 	{

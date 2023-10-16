@@ -27,7 +27,7 @@ int _strlen(const char *str)
 	int len = 0;
 	while (str[len] != '\0')
 	{
-		ien++;
+		len++;
 	}
 	return (len);
 }
@@ -51,8 +51,8 @@ char *_itoa(int num, char *str)
 		num = -num;
 	}
 
+	do
 	{
-		do
 
 		str[i++] = num % 10 + '0';
 		num = num / 10;
@@ -63,7 +63,7 @@ char *_itoa(int num, char *str)
 	}
 
 	str[i] = '\0';
-	int strat = 0;
+	int start = 0;
 
 	int end = i - 1;
 

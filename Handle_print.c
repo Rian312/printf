@@ -1,5 +1,7 @@
 #include "main.h"
 #include <stdarg.h>
+#include <string.h>
+#include <unistd.h>
 
 /**
  * handle_print - Handles formatted printing to stdout
@@ -11,47 +13,37 @@
 
 int handle_print(const char *format, ...)
 {
-	va_list args;
 	int printed chars = 0;
-	const char *ptr;
-	char *str_arg;
-	char char_arg;
-
-	va_start(args,format);
-	for (ptr = format; *ptr != '\0'; ptr++)
+	va_list args;
+        va_start(args,format);
+	
+	while (*format)
 	{
-		if (*ptr == '%')
+		if (*format != '%')
 		{
-			ptr++;
-			switch (*ptr)
-		{
-			case 's':
-				str_arg = va_arg(args, char *);
-				printed_chars += _strlen(str_arg);
-				while (*str_arg)
-				{
-					_putchar(*str_arg);
-					str_arg++;
-				}
-				break;
-			case 'c':
-				char_arg + va_arg(args, int);
-				_putchar(char_arg);
-				printed_chars++;
-				break;
-				case '%':
-				_putchar('%');
-				printed_chars++;
-				break;
-				default:
-				break;
+			_putchar(*format);
+			printed_chars++;
 		}
 		else
 		{
-			_putchar(*ptr);
-			printed_char++;
+			format++;
+			if (*format == 'c')
+			{
+				char char_arg = (char)va_arg(args, int);
+				_putchar(char_arg);
+				printed_chars++;
+			}
+			eise if (format == 's')
+			{
+				char *str_arg = va_arg(args, char *);
+				int len = strlen(str_arg);
+				printed_chars += len;
+				write(1, str_arg, len);
+			}
 		}
+		format++;
 	}
+
 	va_end(args);
-	return (printed_chars);
+	return printed_chars;
 }
